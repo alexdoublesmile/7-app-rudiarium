@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/messages")
+@RequestMapping("/message")
 public class MessageController {
 
     private List<Map<String, String>> messages = new ArrayList<Map<String, String>>() {{
@@ -18,7 +18,7 @@ public class MessageController {
        add(new HashMap<String, String>() {{put("id", "2"); put("text", "Second Message");}});
        add(new HashMap<String, String>() {{put("id", "3"); put("text", "Third Message");}});
     }};
-    
+
     @GetMapping
     public List<Map<String, String>> list() {
         return messages;
