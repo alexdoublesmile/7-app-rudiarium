@@ -27,7 +27,7 @@ public class MessageController {
     }
 
     @GetMapping("/{id}")
-    public Map<String, String> getMessage(@PathVariable String id) {
+    public Map<String, String> getOne(@PathVariable String id) {
         return messages.stream()
                 .filter(message -> message.get("id").equals(id))
                 .findFirst()
