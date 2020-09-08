@@ -27,10 +27,7 @@ public class MessageController {
 
     @GetMapping("/{id}")
     public Map<String, String> getOne(@PathVariable String id) {
-        return messages.stream()
-                .filter(message -> message.get("id").equals(id))
-                .findFirst()
-                .orElseThrow(NotFoundException::new);
+        return getMessage(id);
     }
 
     @PostMapping
@@ -39,5 +36,25 @@ public class MessageController {
         messages.add(message);
 
         return message;
+    }
+
+    @PutMapping("/{id}")
+    public Map<String, String> update(
+            @RequestBody Map<String, String> message,
+            @PathVariable String id
+    ) {
+        Map<String, String> messageFromDB = getMessage(message.get("id"));
+
+        messageFromDB.putAll(message);
+        messageFromDB.put("id", id);
+
+        return messageFromDB;
+    }
+
+    private Map<String, String> getMessage(@PathVariable String id) {
+        return messages.stream()
+                .filter(message -> message.get("id").equals(id))
+                .findFirst()
+                .orElseThrow(NotFoundException::new);
     }
 }
