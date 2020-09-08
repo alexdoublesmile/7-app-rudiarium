@@ -1,10 +1,7 @@
 package edu.plohoy.rudiarium.controller;
 
 import edu.plohoy.rudiarium.exception.NotFoundException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +11,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/message")
 public class MessageController {
+
+    private int counter = 3;
 
     private List<Map<String, String>> messages = new ArrayList<Map<String, String>>() {{
        add(new HashMap<String, String>() {{put("id", "1"); put("text", "First Message");}});
@@ -32,5 +31,13 @@ public class MessageController {
                 .filter(message -> message.get("id").equals(id))
                 .findFirst()
                 .orElseThrow(NotFoundException::new);
+    }
+
+    @PostMapping
+    public Map<String, String> create(@RequestBody Map<String, String> message) {
+        message.put("id", String.valueOf(counter++));
+        messages.add(message);
+
+        return message;
     }
 }
