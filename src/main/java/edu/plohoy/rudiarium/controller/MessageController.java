@@ -52,12 +52,9 @@ public class MessageController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean delete(
-            @RequestBody Map<String, String> message,
-            @PathVariable String id
-    ) {
-        Map<String, String> messageFromDB = getMessage(message.get(id));
-        return messages.remove(messageFromDB);
+    public void delete(@PathVariable String id) {
+        Map<String, String> message = getMessage(id);
+        messages.remove(message);
     }
 
     private Map<String, String> getMessage(@PathVariable String id) {
