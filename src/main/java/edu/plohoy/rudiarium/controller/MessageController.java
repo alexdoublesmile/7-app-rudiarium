@@ -51,6 +51,15 @@ public class MessageController {
         return messageFromDB;
     }
 
+    @DeleteMapping("/{id}")
+    public boolean delete(
+            @RequestBody Map<String, String> message,
+            @PathVariable String id
+    ) {
+        Map<String, String> messageFromDB = getMessage(message.get(id));
+        return messages.remove(messageFromDB);
+    }
+
     private Map<String, String> getMessage(@PathVariable String id) {
         return messages.stream()
                 .filter(message -> message.get("id").equals(id))
