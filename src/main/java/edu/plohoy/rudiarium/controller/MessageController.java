@@ -1,5 +1,6 @@
 package edu.plohoy.rudiarium.controller;
 
+import edu.plohoy.rudiarium.exception.NotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +24,13 @@ public class MessageController {
     @GetMapping
     public List<Map<String, String>> list() {
         return messages;
+    }
+
+    @GetMapping("/{id}")
+    public Map<String, String> getMessage(@PathVariable String id) {
+        return messages.stream()
+                .filter(message -> message.get("id").equals(id))
+                .findFirst()
+                .orElseThrow(NotFoundException::new);
     }
 }
